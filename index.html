@@ -537,8 +537,8 @@ canvas{
 
       <div class="share" id="share">
         <button class="share-btn telegram-btn" id="shareBtn">
-          <span class="telegram-icon">📨</span>
-          <span>Поделиться в Telegram</span>
+          <span class="telegram-icon">📋</span>
+          <span>Скопировать</span>
         </button>
       </div>
     </div>
@@ -548,7 +548,7 @@ canvas{
 </div>
 
 <script>
-  const clickSound = new Audio("sounds/click.mp3");
+const clickSound = new Audio("sounds/click.mp3");
 const spinSound = new Audio("sounds/spin.mp3");
 const winSound = new Audio("sounds/win.mp3");
 const bgMusic = new Audio("sounds/bg.mp3");
@@ -764,6 +764,7 @@ const resultCard = document.getElementById("resultCard");
 const resultLabel = document.getElementById("resultLabel");
 const resultTop = document.getElementById("resultTop");
 const resultKind = document.getElementById("resultKind");
+const spin = document.getElementById("spin");
 
 let rotation = 0;
 let busy = false;
@@ -813,7 +814,6 @@ function draw(){
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // метка для особенных подарков
     if (item.level === "special") {
       ctx.save();
       ctx.translate(cx, cy);
@@ -839,16 +839,13 @@ function draw(){
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
-    // emoji ближе к краю и крупнее
     ctx.font = "36px Arial";
     ctx.fillStyle = "#ffffff";
     ctx.fillText(item.emoji, 208, 0);
 
-    // подпись крупнее и по центру сектора
     let fontSize = 24;
     ctx.font = `bold ${fontSize}px Arial`;
 
-    // если слово длинновато — чуть уменьшаем
     while (ctx.measureText(item.wheelLabel).width > 92 && fontSize > 15) {
       fontSize--;
       ctx.font = `bold ${fontSize}px Arial`;
@@ -867,7 +864,13 @@ function pickWeightedIndex(){
 
 function shareText(item){
   const levelText = item.level === "special" ? "особенный сюрприз" : "милый подарок";
-  return `🎁 Мне выпало: ${item.label} ${item.emoji}\n💖 Это мой ${levelText}!`;
+
+  return `🎁 Тахмине выпало: ${item.label} ${item.emoji}
+💖 Это ${levelText}!
+
+${item.text}
+
+С днём рождения, Тахмина! Пусть твой день будет наполнен счастьем, теплом и самыми красивыми сюрпризами ✨`;
 }
 
 function getWaitPhrase(){
@@ -902,17 +905,9 @@ function spinWheel(){
 
   const index = pickWeightedIndex();
   const deg = 360 / items.length;
-
-  // угол, на котором должен оказаться выбранный сектор под стрелкой
   const targetAngle = 360 - (index * deg + deg / 2);
-
-  // текущий угол рулетки в пределах 0..360
   const currentAngle = ((rotation % 360) + 360) % 360;
-
-  // сколько нужно докрутить от текущего положения до нужного сектора
   const delta = ((targetAngle - currentAngle) + 360) % 360;
-
-  // дополнительные полные обороты для красивой анимации
   const extraSpins = 360 * (5 + Math.floor(Math.random() * 2));
 
   rotation += extraSpins + delta;
@@ -958,17 +953,23 @@ shareBtn.onclick = async () => {
 
   const text = shareText(current);
 
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: "Мой сюрприз",
-        text: text
-      });
-    } catch (e) {
-      // пользователь закрыл окно "Поделиться"
-    }
-  } else {
-    alert(text);
+  try {
+    await navigator.clipboard.writeText(text);
+
+    shareBtn.innerHTML = `
+      <span class="telegram-icon">✅</span>
+      <span>Скопировано</span>
+    `;
+
+    setTimeout(() => {
+      shareBtn.innerHTML = `
+        <span class="telegram-icon">📋</span>
+        <span>Скопировать</span>
+      `;
+    }, 1800);
+
+  } catch (e) {
+    alert("Не удалось скопировать текст 😔");
   }
 };
 
