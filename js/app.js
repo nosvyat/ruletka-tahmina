@@ -5,6 +5,7 @@ import { drawWheel, spinWheel } from "./wheel.js";
 const introScreen = document.getElementById("introScreen");
 const wheelScreen = document.getElementById("wheelScreen");
 const openSurprise = document.getElementById("openSurprise");
+const introTextEl = document.getElementById("introText");
 
 const canvas = document.getElementById("wheel");
 const spin = document.getElementById("spin");
@@ -47,6 +48,17 @@ let audioUnlocked = false;
 let busy = false;
 let current = null;
 let waitInterval = null;
+
+/* ===== INTRO TYPING ===== */
+
+const introLines = [
+  "Привет ✨",
+  "Это рулетка подарков для Тахмины.",
+  "Покрути её и узнай, какой сюрприз ты можешь отправить ей 💝"
+];
+
+let introSkipped = false;
+let activeTypingTimer = null;
 
 // init
 drawWheel(canvas);
@@ -192,14 +204,91 @@ function sendToTelegram(item) {
   }, 1200);
 }
 
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function typeText(element, text, speed = 42) {
+  return new Promise(resolve => {
+    let i = 0;
+    element.textContent = "";
+    element.classList.add("typing-cursor");
+
+    const tick = () => {
+      if (introSkipped) {
+        element.textContent = text;
+        element.classList.remove("typing-cursor");
+        activeTypingTimer = null;
+        resolve();
+        return;
+      }
+
+      element.textContent += text.charAt(i);
+      i++;
+
+      if (i >= text.length) {
+        element.classList.remove("typing-cursor");
+        activeTypingTimer = null;
+        resolve();
+        return;
+      }
+
+      activeTypingTimer = setTimeout(tick, speed);
+    };
+
+    tick();
+  });
+}
+
+async function showIntroTyping() {
+  if (!introTextEl || !openSurprise) return;
+
+  introTextEl.innerHTML = "";
+  openSurprise.classList.add("hidden");
+  openSurprise.classList.remove("show");
+
+  for (const line of introLines) {
+    const lineEl = document.createElement("div");
+    lineEl.className = "intro-line";
+    introTextEl.appendChild(lineEl);
+
+    if (!introSkipped) {
+      await wait(250);
+    }
+
+    await typeText(lineEl, line, 42);
+
+    if (!introSkipped) {
+      await wait(350);
+    }
+  }
+
+  openSurprise.classList.remove("hidden");
+
+  requestAnimationFrame(() => {
+    openSurprise.classList.add("show");
+  });
+}
+
+function finishIntroAndOpenWheel() {
+  introSkipped = true;
+
+  if (activeTypingTimer) {
+    clearTimeout(activeTypingTimer);
+    activeTypingTimer = null;
+  }
+
+  playSound(clickSound);
+  startBgMusic();
+  showScreen(wheelScreen);
+}
+
 // events
 window.addEventListener("click", unlockAudio, { once: true });
 window.addEventListener("touchstart", unlockAudio, { once: true });
 
 openSurprise.addEventListener("click", () => {
-  playSound(clickSound);
-  startBgMusic();
-  showScreen(wheelScreen);
+  finishIntroAndOpenWheel();
 });
 
 spin.addEventListener("click", () => {
@@ -229,3 +318,6 @@ sendBtn.addEventListener("click", () => {
   playSound(clickSound);
   sendToTelegram(current);
 });
+
+// start intro
+showIntroTyping();
