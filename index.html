@@ -10,8 +10,8 @@
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   background:
-    radial-gradient(circle at top, rgba(255,255,255,.75), rgba(255,255,255,0) 35%),
-    linear-gradient(135deg,#f7dfe7,#eee6fb 45%,#fcefd7);
+    linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)),
+    url("images/bg.png") center/cover no-repeat;
   overflow-x:hidden;
   color:#443347;
 }
@@ -483,25 +483,25 @@ canvas{
   <section class="screen active" id="introScreen">
     <div class="hero">
       <div class="hero-card">
-        <div class="hero-badge">🎂 Только для Тахмины</div>
-        <div class="hero-title">
-          С днём рождения,
-          <span>Тахмина 💖</span>
-        </div>
+        <div class="hero-badge">🎁 Подарок для Тахмины</div>
+       <div class="hero-title">
+  Хочешь порадовать
+  <span>Тахмину? 💖</span>
+</div>
         <div class="hero-text">
-          Я приготовил для тебя маленькую рулетку сюрпризов.
-          Крути её и смотри, какой подарок ждёт тебя сегодня ✨
-        </div>
-        <button class="open-btn" id="openSurprise">Открыть мой сюрприз</button>
-        <div class="hero-note">Пусть сегодня тебе выпадает только самое красивое 💐</div>
+  Это рулетка подарков для Тахмины.
+  Покрути её и узнай, какой приятный сюрприз ты можешь отправить ей сегодня ✨
+</div>
+        <button class="open-btn" id="openSurprise">Выбрать подарок для Тахмины</button>
+        <div class="hero-note">Один поворот — один готовый подарок для Тахмины 💐</div>
       </div>
     </div>
   </section>
 
   <section class="screen" id="wheelScreen">
-    <div class="title">Рулетка сюрпризов</div>
-    <div class="desc">Крути и смотри, какой подарок сегодня выпал именно тебе 💝</div>
-    <div class="personal-line">Для самой прекрасной Тахмины ✨</div>
+    <div class="title">Рулетка подарков</div>
+    <div class="desc">Покрути рулетку и узнай, какой подарок ты можешь отправить Тахмине 💝</div>
+    <div class="personal-line">Выбери для неё что-то приятное ✨</div>
 
     <div class="wheel-wrap">
       <div class="pointer"></div>
@@ -509,15 +509,15 @@ canvas{
       <div class="center">🎁</div>
     </div>
 
-    <button class="spin-btn" id="spin">Крутить рулетку</button>
+    <button class="spin-btn" id="spin">Выбрать подарок</button>
 
     <div class="wait-box" id="waitBox">
-      <div class="wait-title">Подготовка сюрприза</div>
-      <div class="wait-text" id="waitText">Смотрим, что тебе выпало... ✨</div>
+      <div class="wait-title">Подбор подарка</div>
+      <div class="wait-text" id="waitText">Смотрим, какой подарок можно отправить Тахмине... ✨</div>
       <div class="wait-dots">•••</div>
     </div>
 
-    <div class="result-card" id="resultCard">
+     <div class="result-card" id="resultCard">
       <div class="confetti" id="confetti">
         <span class="spark">✨</span>
         <span class="spark">🎉</span>
@@ -536,9 +536,9 @@ canvas{
       <div class="result-kind" id="resultKind">Уровень сюрприза</div>
 
       <div class="share" id="share">
-        <button class="share-btn telegram-btn" id="shareBtn">
-          <span class="telegram-icon">📋</span>
-          <span>Скопировать</span>
+        <button class="share-btn telegram-btn" id="sendBtn">
+          <span class="telegram-icon">🎁</span>
+          <span>Отправить Тахмине</span>
         </button>
       </div>
     </div>
@@ -756,7 +756,7 @@ const ctx = canvas.getContext("2d");
 const nameEl = document.getElementById("name");
 const textEl = document.getElementById("text");
 const share = document.getElementById("share");
-const shareBtn = document.getElementById("shareBtn");
+const sendBtn = document.getElementById("sendBtn");
 const confetti = document.getElementById("confetti");
 const waitBox = document.getElementById("waitBox");
 const waitText = document.getElementById("waitText");
@@ -863,16 +863,15 @@ function pickWeightedIndex(){
 }
 
 function shareText(item){
-  const levelText = item.level === "special" ? "особенный сюрприз" : "милый подарок";
+  const levelText = item.level === "special" ? "особенный подарок" : "милый подарок";
 
-  return `🎁 Тахмине выпало: ${item.label} ${item.emoji}
+  return `🎁 Для Тахмины выбран подарок: ${item.label} ${item.emoji}
 💖 Это ${levelText}!
 
 ${item.text}
 
-С днём рождения, Тахмина! Пусть твой день будет наполнен счастьем, теплом и самыми красивыми сюрпризами ✨`;
+Надеюсь, тебе будет приятно ✨`;
 }
-
 function getWaitPhrase(){
   return waitingPhrases[Math.floor(Math.random() * waitingPhrases.length)];
 }
@@ -922,23 +921,25 @@ function spinWheel(){
     playWinSound();
 
     if (current.level === "special") {
-      resultTop.textContent = "Сегодня тебе выпал особенный сюрприз ✨";
-      resultLabel.textContent = "Особенный подарок";
-      resultKind.textContent = "Уровень: особенный";
-      resultCard.classList.add("special");
-    } else {
-      resultTop.textContent = "Для тебя сегодня выпало 💖";
-      resultLabel.textContent = "Милый подарок";
-      resultKind.textContent = "Уровень: милый";
-    }
+  resultTop.textContent = "Для Тахмины можно отправить особенный подарок ✨";
+  resultLabel.textContent = "Особенный подарок";
+  resultKind.textContent = "Уровень: особенный";
+  resultCard.classList.add("special");
+} else {
+  resultTop.textContent = "Для Тахмины можно отправить 💖";
+  resultLabel.textContent = "Милый подарок";
+  resultKind.textContent = "Уровень: милый";
+}
 
     waitBox.classList.remove("show");
     resultCard.classList.add("show");
+    spin.style.display = "none";
     share.classList.add("show");
     confetti.classList.add("show");
 
-    spin.disabled = false;
-    busy = false;
+   // полностью блокируем повтор
+spin.disabled = true;
+busy = true;
   }, 5200);
 }
 
@@ -947,30 +948,18 @@ spin.onclick = () => {
   spinWheel();
 };
 
-shareBtn.onclick = async () => {
+sendBtn.onclick = () => {
   playSound(clickSound);
   if (!current) return;
 
-  const text = shareText(current);
+  const text = encodeURIComponent(shareText(current));
+  const tahminaUsername = "psiheyamlbb";
 
-  try {
-    await navigator.clipboard.writeText(text);
+  window.location.href = `tg://resolve?domain=${tahminaUsername}&text=${text}`;
 
-    shareBtn.innerHTML = `
-      <span class="telegram-icon">✅</span>
-      <span>Скопировано</span>
-    `;
-
-    setTimeout(() => {
-      shareBtn.innerHTML = `
-        <span class="telegram-icon">📋</span>
-        <span>Скопировать</span>
-      `;
-    }, 1800);
-
-  } catch (e) {
-    alert("Не удалось скопировать текст 😔");
-  }
+  setTimeout(() => {
+    window.open(`https://t.me/${tahminaUsername}`, "_blank");
+  }, 600);
 };
 
 draw();
