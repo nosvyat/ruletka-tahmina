@@ -1,111 +1,125 @@
-/* ===== INTRO ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
 
-.intro-simple {
-  min-height: calc(100vh - 46px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.14) 0%,
+      rgba(255,255,255,0.08) 34%,
+      rgba(255,255,255,0.16) 100%
+    ),
+    url("../images/bg.png") center/cover no-repeat;
+  overflow-x: hidden;
+  color: #443347;
   position: relative;
-  overflow: hidden;
-  padding: 20px;
 }
 
-/* мягкие цветовые пятна для атмосферы */
-.intro-simple::before,
-.intro-simple::after {
+/* общий overlay для глубины и читаемости */
+body::before {
   content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(30px);
-  opacity: 0.38;
-  z-index: 0;
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28,16,34,0.22) 0%,
+      rgba(28,16,34,0.10) 28%,
+      rgba(255,255,255,0.02) 56%,
+      rgba(28,16,34,0.14) 100%
+    );
   pointer-events: none;
+  z-index: 0;
 }
 
-.intro-simple::before {
-  width: 190px;
-  height: 190px;
-  background: rgba(226, 170, 205, 0.48);
-  top: 60px;
-  left: -35px;
-}
-
-.intro-simple::after {
-  width: 240px;
-  height: 240px;
-  background: rgba(170, 160, 220, 0.38);
-  right: -70px;
-  bottom: 110px;
-}
-
-/* контейнер текста */
-.intro-text {
+/* контейнер приложения */
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 18px 16px 28px;
   position: relative;
   z-index: 1;
-  max-width: 320px;
-  color: #ffffff;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
 }
 
-/* каждая строка */
-.intro-line {
-  font-size: 20px;
-  line-height: 1.6;
-  margin-bottom: 12px;
-  min-height: 32px;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: fadeLine 0.45s ease forwards;
+.screen {
+  display: none;
+  animation: fadeIn .55s ease;
 }
 
-.intro-line:last-child {
-  margin-bottom: 0;
+.screen.active {
+  display: block;
 }
 
-@keyframes fadeLine {
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* курсор печати */
-.typing-cursor::after {
-  content: "|";
-  display: inline-block;
-  margin-left: 2px;
-  color: rgba(255,255,255,0.9);
-  animation: blink 0.8s infinite;
-}
+/* ===== КНОПКИ ===== */
 
-@keyframes blink {
-  0%, 49% {
-    opacity: 1;
-  }
-  50%, 100% {
-    opacity: 0;
-  }
-}
-
-/* кнопка */
-.intro-btn {
-  position: relative;
-  z-index: 1;
-  margin-top: 30px;
+.open-btn,
+.spin-btn,
+.share-btn {
   width: 100%;
-  max-width: 300px;
-  transform: translateY(10px);
-  opacity: 0;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  border: none;
+  border-radius: 20px;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(90deg, #d86aa5, #8a79d8);
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(112, 92, 167, 0.24);
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
 }
 
-.intro-btn.show {
+.open-btn:hover,
+.spin-btn:hover,
+.share-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(112, 92, 167, 0.30);
+}
+
+.open-btn:active,
+.spin-btn:active,
+.share-btn:active {
   transform: translateY(0);
-  opacity: 1;
 }
 
-.hidden {
-  display: none;
+.spin-btn:disabled {
+  opacity: .72;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== ТЕКСТ ДЛЯ GLASS-БЛОКОВ ===== */
+
+.title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.28);
+}
+
+.desc {
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.55;
+  margin-bottom: 0;
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.22);
 }
