@@ -38,18 +38,18 @@ export function drawWheel(canvas) {
     const grad = ctx.createLinearGradient(0, 0, 520, 520);
 
     if (item.level === "special") {
-      grad.addColorStop(0, "#ffe7a8");
-      grad.addColorStop(1, "#ffb7d9");
+      grad.addColorStop(0, "#e8d7b4");
+      grad.addColorStop(1, "#cfa0b8");
     } else {
-      grad.addColorStop(0, i % 2 ? "#ffd1e8" : "#e7dcff");
-      grad.addColorStop(1, i % 2 ? "#ff9ecf" : "#cbb7ff");
+      grad.addColorStop(0, i % 2 ? "#e5c7d7" : "#d8d2ee");
+      grad.addColorStop(1, i % 2 ? "#c88fb0" : "#a89ad6");
     }
 
     ctx.fillStyle = grad;
     ctx.fill();
 
-    ctx.strokeStyle = "rgba(255,255,255,.48)";
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = "rgba(255,255,255,0.34)";
+    ctx.lineWidth = 1.2;
     ctx.stroke();
 
     // звёздочка для special
@@ -59,11 +59,11 @@ export function drawWheel(canvas) {
       ctx.rotate(mid);
 
       ctx.beginPath();
-      ctx.fillStyle = "rgba(255,255,255,.92)";
+      ctx.fillStyle = "rgba(255,255,255,0.82)";
       ctx.arc(168, -36, 10, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = "#c68b0f";
+      ctx.fillStyle = "#9d7a2b";
       ctx.font = "bold 12px Arial";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -91,6 +91,7 @@ export function drawWheel(canvas) {
       ctx.font = `bold ${fontSize}px Arial`;
     }
 
+    ctx.fillStyle = "rgba(255,255,255,0.96)";
     ctx.fillText(item.wheelLabel, 135, 0);
 
     ctx.restore();
