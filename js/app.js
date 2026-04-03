@@ -54,11 +54,17 @@ let waitInterval = null;
 const introLines = [
   "Привет ✨",
   "Это рулетка подарков для Тахмины.",
-  "Покрути её и узнай, какой сюрприз ты можешь отправить ей 💝"
+  "Покрути её и узнай, какой сюрприз ты можешь отправить ей сегодня 💝",
+  "Ты готов?"
 ];
 
 let introSkipped = false;
 let activeTypingTimer = null;
+
+// настройки скорости интро
+const INTRO_TYPING_SPEED = 65;      // скорость печати по буквам
+const INTRO_BEFORE_LINE_DELAY = 250; // небольшая пауза перед началом строки
+const INTRO_AFTER_LINE_DELAY = 2300; // пауза после каждого предложения
 
 // init
 drawWheel(canvas);
@@ -208,7 +214,7 @@ function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function typeText(element, text, speed = 42) {
+function typeText(element, text, speed = INTRO_TYPING_SPEED) {
   return new Promise(resolve => {
     let i = 0;
     element.textContent = "";
@@ -253,13 +259,13 @@ async function showIntroTyping() {
     introTextEl.appendChild(lineEl);
 
     if (!introSkipped) {
-      await wait(250);
+      await wait(INTRO_BEFORE_LINE_DELAY);
     }
 
-    await typeText(lineEl, line, 42);
+    await typeText(lineEl, line, INTRO_TYPING_SPEED);
 
     if (!introSkipped) {
-      await wait(350);
+      await wait(INTRO_AFTER_LINE_DELAY);
     }
   }
 
