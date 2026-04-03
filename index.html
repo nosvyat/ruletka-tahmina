@@ -5,46 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Рулетка сюрпризов для Тахмины</title>
   <link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/intro.css">
-<link rel="stylesheet" href="css/wheel.css">
-<link rel="stylesheet" href="css/result.css">
+  <link rel="stylesheet" href="css/intro.css">
+  <link rel="stylesheet" href="css/wheel.css">
+  <link rel="stylesheet" href="css/result.css">
 </head>
 <body>
   <div class="app">
 
     <section class="screen active" id="introScreen">
-      <div class="hero">
-        <div class="hero-card">
-          <div class="hero-badge">🎁 Подарок для Тахмины</div>
+      <div class="intro-simple">
+        <div class="intro-text" id="introText"></div>
 
-          <div class="hero-title">
-            Хочешь порадовать
-            <span>Тахмину? 💖</span>
-          </div>
-
-          <div class="hero-text">
-            Это рулетка подарков для Тахмины.
-            Покрути её и узнай, какой приятный сюрприз ты можешь отправить ей сегодня ✨
-          </div>
-
-          <button class="open-btn" id="openSurprise">
-            Выбрать подарок для Тахмины
-          </button>
-
-          <div class="hero-note">
-            Один поворот — один готовый подарок для Тахмины 💐
-          </div>
-        </div>
+        <button class="open-btn intro-btn hidden" id="openSurprise">
+          Выбрать подарок для Тахмины
+        </button>
       </div>
     </section>
 
     <section class="screen" id="wheelScreen">
       <div class="wheel-hero glass-fade">
-  <div class="title">Рулетка подарков</div>
-  <div class="desc">
-    Покрути рулетку и узнай, какой подарок ты можешь отправить Тахмине 💝
-  </div>
-</div>
+        <div class="title">Рулетка подарков</div>
+        <div class="desc">
+          Покрути рулетку и узнай, какой подарок ты можешь отправить Тахмине 💝
+        </div>
+      </div>
 
       <div class="wheel-wrap">
         <div class="pointer"></div>
