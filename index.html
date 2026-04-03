@@ -952,14 +952,40 @@ sendBtn.onclick = () => {
   playSound(clickSound);
   if (!current) return;
 
-  const text = encodeURIComponent(shareText(current));
   const tahminaUsername = "psiheyamlbb";
 
-  window.location.href = `tg://resolve?domain=${tahminaUsername}&text=${text}`;
+  let draft = shareText(current);
+  if (draft.startsWith("@")) draft = " " + draft;
 
-  setTimeout(() => {
-    window.open(`https://t.me/${tahminaUsername}`, "_blank");
-  }, 600);
+  const encDraft = encodeURIComponent(draft);
+
+  const tgLink = `tg://resolve?domain=${tahminaUsername}&text=${encDraft}`;
+  const httpsLink = `https://t.me/${tahminaUsername}?text=${encDraft}`;
+
+  let timerId = null;
+
+  const cancelFallback = () => {
+    if (timerId !== null) {
+      clearTimeout(timerId);
+      timerId = null;
+    }
+  };
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+      if (document.hidden) cancelFallback();
+    },
+    { once: true }
+  );
+
+  window.location.href = tgLink;
+
+  timerId = setTimeout(() => {
+    if (!document.hidden) {
+      window.location.href = httpsLink;
+    }
+  }, 1200);
 };
 
 draw();
