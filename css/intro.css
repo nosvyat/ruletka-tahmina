@@ -1,0 +1,128 @@
+/* intro экран */
+
+.hero {
+  min-height: calc(100vh - 46px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* мягкие цветовые пятна (оставляем, но чуть мягче) */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(28px);
+  opacity: .45;
+  z-index: 0;
+}
+
+.hero::before {
+  width: 200px;
+  height: 200px;
+  background: rgba(255,190,221,.6);
+  top: 30px;
+  left: -40px;
+}
+
+.hero::after {
+  width: 240px;
+  height: 240px;
+  background: rgba(205,189,255,.55);
+  right: -70px;
+  bottom: 80px;
+}
+
+/* 🔥 GLASS КАРТОЧКА */
+.hero-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 28px 22px;
+  border-radius: 30px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.20),
+    rgba(255,255,255,0.10)
+  );
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255,255,255,0.18);
+
+  box-shadow:
+    0 18px 45px rgba(24,12,28,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+/* стеклянный бейдж */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 18px;
+
+  border: 1px solid rgba(255,255,255,0.14);
+
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+/* заголовок */
+.hero-title {
+  font-size: 34px;
+  line-height: 1.1;
+  font-weight: 900;
+  margin-bottom: 14px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 2px 14px rgba(0,0,0,0.30);
+}
+
+.hero-title span {
+  display: block;
+  color: #ffd2ea;
+
+  text-shadow:
+    0 2px 12px rgba(0,0,0,0.25);
+}
+
+/* основной текст */
+.hero-text {
+  font-size: 17px;
+  line-height: 1.6;
+
+  color: rgba(255,255,255,0.90);
+
+  margin-bottom: 22px;
+
+  text-shadow:
+    0 1px 8px rgba(0,0,0,0.22);
+}
+
+/* подпись */
+.hero-note {
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  margin-top: 14px;
+
+  text-shadow:
+    0 1px 6px rgba(0,0,0,0.18);
+}
