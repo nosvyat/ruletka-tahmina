@@ -1,0 +1,436 @@
+/* ===== GLASS БЛОК ПОД ТЕКСТ ===== */
+
+.wheel-hero {
+  margin-bottom: 18px;
+}
+
+.glass-fade {
+  position: relative;
+  padding: 20px 18px;
+  border-radius: 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.14) 0%,
+    rgba(255,255,255,0.08) 48%,
+    rgba(255,255,255,0.04) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+/* ===== СЦЕНА РУЛЕТКИ + ЧИБИ ===== */
+
+.wheel-stage {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.chibi-wrap {
+  position: absolute;
+  left: 265px;
+  top: 130px;
+  width: 140px;
+  height: 190px;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.chibi-character {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 110px;
+  height: 130px;
+}
+
+.chibi-img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 110px;
+  height: auto;
+  opacity: 0;
+  transform-origin: center bottom;
+  transition: opacity .28s ease;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.22));
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* показываем нужное состояние */
+#chibiWrap[data-state="idle"] .chibi-img[data-chibi="idle"],
+#chibiWrap[data-state="spinning"] .chibi-img[data-chibi="spinning"],
+#chibiWrap[data-state="result"] .chibi-img[data-chibi="result"] {
+  opacity: 1;
+}
+
+/* ===== ОБЛАЧКО ===== */
+
+.chibi-bubble {
+  position: absolute;
+  left: 52px;
+  top: 10px;
+  width: 118px;
+  min-height: 54px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: rgba(255,255,255,.96);
+  color: #5a4961;
+  border-radius: 18px;
+  border: 2px solid rgba(255,255,255,.95);
+  box-shadow: 0 8px 18px rgba(0,0,0,.16);
+
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.chibi-bubble::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  bottom: -7px;
+  width: 14px;
+  height: 14px;
+  background: rgba(255,255,255,.96);
+  border-right: 2px solid rgba(255,255,255,.95);
+  border-bottom: 2px solid rgba(255,255,255,.95);
+  transform: rotate(45deg);
+}
+
+/* ===== РУЛЕТКА ===== */
+
+.wheel-wrap {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto 18px;
+  filter: drop-shadow(0 18px 26px rgba(120, 92, 138, 0.18));
+}
+
+.wheel-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      from 0deg,
+      #d9bdd0,
+      #e3cfdb,
+      #c8c3e0,
+      #ddd0ba,
+      #e0c9d5,
+      #d9bdd0
+    ),
+    radial-gradient(circle at center, rgba(255,255,255,.55), rgba(255,255,255,0));
+  filter: blur(12px);
+  opacity: .58;
+  z-index: 0;
+  animation: glow 3.4s ease-in-out infinite;
+}
+
+.wheel-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 4px solid rgba(255,255,255,.72);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.18),
+    0 0 18px rgba(205,160,214,.16);
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes glow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: .5;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: .66;
+  }
+}
+
+/* стрелка */
+.pointer {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 17px solid transparent;
+  border-right: 17px solid transparent;
+  border-top: 30px solid #d85c9d;
+  z-index: 5;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.18));
+}
+
+/* колесо */
+canvas {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255,255,255,.96);
+  box-shadow:
+    0 16px 36px rgba(0,0,0,.10),
+    inset 0 0 0 10px rgba(255,255,255,.92),
+    inset 0 0 20px rgba(212,188,208,.16);
+  transition: transform 5.2s cubic-bezier(.12,.9,.08,1);
+}
+
+/* центр */
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fffdfd, #f2e6ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.14),
+    inset 0 0 10px rgba(255,255,255,.75);
+  z-index: 4;
+  border: 5px solid rgba(255,255,255,.92);
+}
+
+.spin-btn {
+  margin-top: 10px;
+}
+
+/* ===== WAITING ===== */
+
+.wait-box {
+  display: none;
+  margin-top: 14px;
+  text-align: center;
+  padding: 16px 14px;
+  border-radius: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.16),
+    rgba(255,255,255,0.08)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+  font-size: 15px;
+  color: rgba(255,255,255,0.9);
+}
+
+.wait-box.show {
+  display: block;
+  animation: fadeIn .3s ease;
+}
+
+.wait-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 7px;
+}
+
+.wait-text {
+  font-size: 16px;
+  line-height: 1.45;
+  min-height: 44px;
+  font-weight: 600;
+}
+
+.wait-dots {
+  margin-top: 8px;
+  color: #f0d7e6;
+  letter-spacing: 4px;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: .45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ===== АНИМАЦИИ ЧИБИ ===== */
+
+@keyframes chibiFloatIdle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes chibiFloatSpin {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes chibiHappyBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-16px);
+  }
+  60% {
+    transform: translateY(4px);
+  }
+}
+
+#chibiWrap[data-state="idle"] .chibi-img[data-chibi="idle"] {
+  animation: chibiFloatIdle 3.2s ease-in-out infinite;
+}
+
+#chibiWrap[data-state="spinning"] .chibi-img[data-chibi="spinning"] {
+  animation: chibiFloatSpin 2s ease-in-out infinite;
+}
+
+#chibiWrap[data-state="result"] .chibi-img[data-chibi="result"] {
+  animation: chibiHappyBounce .85s ease-in-out infinite;
+}
+
+@keyframes bubbleSoft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes bubbleThinking {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes bubbleHappy {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+#chibiWrap[data-state="idle"] .chibi-bubble {
+  animation: bubbleSoft 3s ease-in-out infinite;
+}
+
+#chibiWrap[data-state="spinning"] .chibi-bubble {
+  animation: bubbleThinking 1.8s ease-in-out infinite;
+}
+
+#chibiWrap[data-state="result"] .chibi-bubble {
+  animation: bubbleHappy .95s ease-in-out infinite;
+}
+
+/* ===== АДАПТИВ ===== */
+
+@media (max-width: 480px) {
+  .wheel-stage {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .chibi-wrap {
+    left: -56px;
+    top: 138px;
+    width: 126px;
+    height: 176px;
+  }
+
+  .chibi-character {
+    width: 96px;
+    height: 118px;
+  }
+
+  .chibi-img {
+    width: 96px;
+  }
+
+  .chibi-bubble {
+    left: 44px;
+    width: 108px;
+    min-height: 50px;
+    font-size: 11px;
+    padding: 9px 10px;
+  }
+
+  .wheel-wrap {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+@media (max-width: 390px) {
+  .chibi-wrap {
+    left: -42px;
+    top: 138px;
+    width: 118px;
+    height: 166px;
+  }
+
+  .chibi-character {
+    width: 90px;
+    height: 112px;
+  }
+
+  .chibi-img {
+    width: 90px;
+  }
+
+  .chibi-bubble {
+    left: 40px;
+    width: 100px;
+    min-height: 48px;
+    font-size: 10px;
+    padding: 8px 9px;
+  }
+
+  .wheel-wrap {
+    width: 260px;
+    height: 260px;
+  }
+}

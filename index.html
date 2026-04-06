@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Рулетка сюрпризов для Тахмины</title>
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/intro.css">
+  <link rel="stylesheet" href="css/wheel.css">
+  <link rel="stylesheet" href="css/result.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+  <div class="app">
+
+    <section class="screen active" id="introScreen">
+      <div class="intro-chat-scene">
+
+        <div class="intro-chat-header">
+          <button class="intro-header-back" type="button" aria-label="Назад">
+            <span>‹</span>
+          </button>
+
+          <div class="intro-header-profile" id="openProfile" role="button" tabindex="0" aria-label="Открыть профиль">
+            <div class="intro-header-avatar">
+              <img src="images/chat-avatar.png" alt="Аватар Сатору Годжо">
+            </div>
+
+            <div class="intro-header-user">
+              <div class="intro-header-name">Сатору Годжо</div>
+              <div class="intro-header-status" id="introHeaderStatus">в сети</div>
+            </div>
+          </div>
+
+          <div class="intro-header-actions">
+            <button class="intro-header-icon" type="button" aria-label="Позвонить">
+              <span>📞</span>
+            </button>
+
+            <button class="intro-header-icon" type="button" aria-label="Меню">
+              <span>⋮</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="intro-chat-messages" id="introChatMessages"></div>
+
+        <div class="intro-chibi-wrap" id="introChibiWrap">
+          <div class="intro-thoughts" id="introThoughts">
+            <div class="intro-thoughts-text" id="introThoughtsText"></div>
+            <span class="intro-typing-cursor" id="introTypingCursor"></span>
+          </div>
+
+          <div class="intro-chibi-character" id="introChibiCharacter">
+            <img
+              class="intro-chibi-img intro-chibi-idle is-active"
+              src="images/intro-chibi-idle.png"
+              alt="Чиби печатает сообщение"
+              id="introChibiIdle"
+            />
+
+            <img
+              class="intro-chibi-img intro-chibi-point"
+              src="images/intro-chibi-point.png"
+              alt="Чиби указывает на кнопку"
+              id="introChibiPoint"
+            />
+          </div>
+        </div>
+
+        <div class="intro-action" id="introAction">
+          <button class="open-btn intro-btn hidden" id="openSurprise">
+            Крутить рулетку
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="wheelScreen">
+      <div class="wheel-hero glass-fade">
+        <div class="title">Рулетка подарков</div>
+        <div class="desc">
+          Покрути рулетку и узнай, какой подарок ты можешь отправить Тахмине 💝
+        </div>
+      </div>
+
+      <div class="wheel-stage">
+        <div class="chibi-wrap" id="chibiWrap" data-state="idle">
+          <div class="chibi-bubble" id="chibiBubble" data-state="idle">
+            Что же выпадет?..
+          </div>
+
+          <div class="chibi-character" id="chibiCharacter" data-state="idle">
+            <img
+              class="chibi-img chibi-idle is-active"
+              src="images/chibi-idle.png"
+              alt="Чиби в ожидании"
+              data-chibi="idle"
+            />
+            <img
+              class="chibi-img chibi-spinning"
+              src="images/chibi-spinning.png"
+              alt="Чиби во время прокрутки"
+              data-chibi="spinning"
+            />
+            <img
+              class="chibi-img chibi-result"
+              src="images/chibi-result.png"
+              alt="Чиби радуется результату"
+              data-chibi="result"
+            />
+          </div>
+        </div>
+
+        <div class="wheel-wrap">
+          <div class="pointer"></div>
+          <canvas id="wheel" width="520" height="520"></canvas>
+          <div class="center">🎁</div>
+        </div>
+      </div>
+
+      <button class="spin-btn" id="spin">Выбрать подарок</button>
+
+      <div class="wait-box" id="waitBox">
+        <div class="wait-title">Подбор подарка</div>
+        <div class="wait-text" id="waitText">
+          Смотрим, какой подарок можно отправить Тахмине... ✨
+        </div>
+        <div class="wait-dots">•••</div>
+      </div>
+
+      <div class="result-card" id="resultCard">
+        <div class="confetti" id="confetti">
+          <span class="spark">✨</span>
+          <span class="spark">🎉</span>
+          <span class="spark">💖</span>
+          <span class="spark">🎊</span>
+          <span class="spark">✨</span>
+          <span class="spark">🎀</span>
+          <span class="spark">💫</span>
+          <span class="spark">🎉</span>
+        </div>
+
+        <div class="result-top" id="resultTop">Для тебя сегодня выпало 💖</div>
+        <div class="result-label" id="resultLabel">Милый подарок</div>
+        <div class="result-name" id="name">—</div>
+        <div class="result-text" id="text">Нажми «Выбрать подарок»</div>
+        <div class="result-kind" id="resultKind">Уровень сюрприза</div>
+
+        <div class="share" id="share">
+          <button class="share-btn telegram-btn" id="sendBtn">
+            <span class="telegram-icon">🎁</span>
+            <span>Отправить Тахмине</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="footer-note">Особенные подарки сияют немного ярче ✨</div>
+    </section>
+
+    <!-- PROFILE OVERLAY -->
+    <div class="profile-overlay hidden" id="profileOverlay">
+      <div class="profile-backdrop" id="profileBackdrop"></div>
+
+      <div class="profile-sheet" id="profileSheet">
+        <div class="profile-header">
+          <div class="profile-header-top">
+            <button
+              class="profile-close"
+              id="profileClose"
+              type="button"
+              aria-label="Вернуться в чат"
+            >
+              <span class="profile-close-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="profile-close-svg">
+                  <path
+                    d="M14.5 6L8.5 12L14.5 18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <span class="profile-close-text">В чат</span>
+            </button>
+          </div>
+
+          <div class="profile-avatar-wrap" id="profileAvatarWrap">
+            <img
+              src="images/chat-avatar.png"
+              alt="Аватар Сатору Годжо"
+              class="profile-avatar"
+              id="profileAvatar"
+            >
+          </div>
+
+          <div class="profile-name">Сатору Годжо</div>
+
+          <div class="profile-status-text" id="profileStatusText">
+            Сильнейший. И да, я это знаю 😏
+          </div>
+
+          <div class="profile-online" id="profileOnline">в сети</div>
+        </div>
+
+        <div class="profile-content">
+          <div class="profile-section">
+            <div class="profile-section-title">О себе</div>
+
+            <div class="profile-about">
+              <p>Преподаю в Токийском колледже магии.</p>
+              <p>Если коротко — я тот, кто разберётся с любой проблемой.</p>
+              <p>Если длинно — тебе всё равно не понять 😌</p>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <div class="profile-section-title">Основная информация</div>
+
+            <div class="profile-cards">
+              <div class="profile-card">
+                <div class="profile-card-label">📍 Происхождение</div>
+                <div class="profile-card-value">Япония, клан Годзё</div>
+              </div>
+
+              <div class="profile-card">
+                <div class="profile-card-label">🏫 Место работы</div>
+                <div class="profile-card-value">Токийский магический колледж</div>
+              </div>
+
+              <div class="profile-card">
+                <div class="profile-card-label">⚡ Способности</div>
+                <div class="profile-card-value">Безграничность, Шесть глаз</div>
+              </div>
+
+              <div class="profile-card">
+                <div class="profile-card-label">🏆 Статус</div>
+                <div class="profile-card-value">Сильнейший маг современности</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FULLSCREEN AVATAR -->
+    <div class="avatar-viewer hidden" id="avatarViewer">
+      <div class="avatar-viewer-backdrop" id="avatarViewerBackdrop"></div>
+
+      <div class="avatar-viewer-content">
+        <img
+          src="images/chat-avatar.png"
+          alt="Аватар Сатору Годжо"
+          class="avatar-viewer-image"
+          id="avatarViewerImage"
+        >
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
