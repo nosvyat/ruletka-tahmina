@@ -6,6 +6,7 @@ import { drawWheel, spinWheel } from "./wheel.js";
 const introScreen = document.getElementById("introScreen");
 const wheelScreen = document.getElementById("wheelScreen");
 const openSurprise = document.getElementById("openSurprise");
+const introSkip = document.getElementById("introSkip");
 
 const introChatMessages = document.getElementById("introChatMessages");
 const introThoughts = document.getElementById("introThoughts");
@@ -82,6 +83,7 @@ const introLines = [
 ];
 
 let introSkipped = false;
+let introCompleted = false;
 let activeTypingTimer = null;
 
 // скорости интро
@@ -300,6 +302,14 @@ function wait(ms) {
 
 /* ===== INTRO UI ===== */
 
+function scrollIntroMessagesToBottom() {
+  if (!introChatMessages) return;
+
+  requestAnimationFrame(() => {
+    introChatMessages.scrollTop = introChatMessages.scrollHeight;
+  });
+}
+
 function setIntroHeaderStatus(text) {
   if (!introHeaderStatus) return;
   introHeaderStatus.textContent = text;
@@ -380,7 +390,7 @@ function addIntroChatMessage(text) {
   msg.appendChild(meta);
 
   introChatMessages.appendChild(msg);
-  introChatMessages.scrollTop = introChatMessages.scrollHeight;
+  scrollIntroMessagesToBottom();
 }
 
 function typeThoughtText(text, speed = INTRO_TYPING_SPEED) {
@@ -433,21 +443,69 @@ function showIntroButton() {
   });
 }
 
+function hideIntroSkip() {
+  if (!introSkip) return;
+  introSkip.classList.add("is-hidden");
+}
+
+function showIntroSkip() {
+  if (!introSkip || introCompleted) return;
+  introSkip.classList.remove("is-hidden");
+}
+
 function resetIntroScene() {
+  introCompleted = false;
+
   if (introChatMessages) {
     introChatMessages.innerHTML = "";
   }
+
+  scrollIntroMessagesToBottom();
 
   if (openSurprise) {
     openSurprise.classList.add("hidden");
     openSurprise.classList.remove("show");
   }
 
+  showIntroSkip();
+
   clearIntroThoughtText();
   hideIntroCursor();
   setIntroChibiMode("idle");
   hideIntroThoughtBubble();
   setIntroHeaderStatus("в сети");
+}
+
+function completeIntroScene() {
+  introCompleted = true;
+  hideIntroSkip();
+  setIntroHeaderStatus("\u0432 \u0441\u0435\u0442\u0438");
+  setIntroChibiMode("point");
+  showIntroButton();
+  showIntroThoughtBubble();
+  introThoughtsText.textContent = "\u0416\u043c\u0438 \u0441\u044e\u0434\u0430";
+  hideIntroCursor();
+}
+
+function skipIntroTyping() {
+  if (introCompleted) return;
+
+  introSkipped = true;
+
+  if (activeTypingTimer) {
+    clearTimeout(activeTypingTimer);
+    activeTypingTimer = null;
+  }
+
+  if (introChatMessages) {
+    introChatMessages.innerHTML = "";
+  }
+
+  introLines.forEach((line) => {
+    addIntroChatMessage(line);
+  });
+
+  completeIntroScene();
 }
 
 async function showIntroTyping() {
@@ -495,17 +553,16 @@ async function showIntroTyping() {
     await wait(380);
   }
 
-  setIntroChibiMode("point");
-  showIntroButton();
+  if (introSkipped) {
+    completeIntroScene();
+    return;
+  }
 
   if (!introSkipped) {
     await wait(250);
   }
 
-  showIntroThoughtBubble();
-  introThoughtsText.textContent = "Жми сюда";
-  hideIntroCursor();
-  setIntroHeaderStatus("в сети");
+  completeIntroScene();
 }
 
 function finishIntroAndOpenWheel() {
@@ -534,6 +591,13 @@ window.addEventListener("touchstart", unlockAudio, { once: true });
 openSurprise.addEventListener("click", () => {
   finishIntroAndOpenWheel();
 });
+
+if (introSkip) {
+  introSkip.addEventListener("click", () => {
+    playSound(clickSound);
+    skipIntroTyping();
+  });
+}
 
 spin.addEventListener("click", () => {
   if (busy) return;

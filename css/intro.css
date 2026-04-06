@@ -2,7 +2,11 @@
 
 #introScreen {
   position: relative;
-  overflow: visible;
+  width: 100vw;
+  min-height: 100vh;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
   background:
     linear-gradient(180deg, rgba(8, 10, 24, 0.15) 0%, rgba(8, 10, 24, 0.35) 100%),
     url("../images/bg.png") center center / cover no-repeat;
@@ -22,12 +26,12 @@
 
 .intro-chat-scene {
   position: relative;
-  min-height: calc(100vh - 46px);
-  padding: 14px 16px 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  overflow: visible;
+  height: 100vh;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0;
+  overflow: hidden;
   z-index: 1;
 }
 
@@ -41,14 +45,12 @@
   justify-content: space-between;
   gap: 10px;
   width: 100%;
-  min-height: 68px;
-  padding: 10px 12px;
-  margin-bottom: 14px;
-  border-radius: 20px;
-  background: rgba(18, 22, 42, 0.42);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  min-height: 78px;
+  padding: 14px 16px;
+  background: rgba(17, 21, 39, 0.84);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
 }
 
@@ -87,14 +89,19 @@
   border-radius: 50%;
   overflow: hidden;
   flex: 0 0 42px;
-  background: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(255, 235, 247, 0.98), rgba(191, 154, 255, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.18),
+    0 0 0 3px rgba(255, 255, 255, 0.08);
 }
 
 .intro-header-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .intro-header-user {
@@ -142,46 +149,63 @@
 
 /* ===== CHAT BODY ===== */
 
+.intro-chat-body {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.intro-chat-body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 46px;
+  background: linear-gradient(180deg, rgba(11, 14, 28, 0) 0%, rgba(11, 14, 28, 0.38) 100%);
+  pointer-events: none;
+}
+
 .intro-chat-messages {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 100%;
+  height: 100%;
+  min-height: 0;
   margin: 0 auto;
-  padding-top: 4px;
-  padding-bottom:40px;
+  padding: 18px 16px 72px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
 }
 
-/* ===== CHAT MESSAGE: ОТПРАВЛЕННЫЕ СПРАВА ===== */
+.intro-chat-messages::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== CHAT MESSAGE ===== */
 
 .intro-chat-message {
   position: relative;
-  max-width: 82%;
-
-  /* ПЕРЕНОС ВЛЕВО */
+  max-width: min(82%, 278px);
   margin-left: 0;
   margin-right: auto;
-
-  padding: 6px 10px 16px;
-
-  /* ФОРМА ПУЗЫРЯ (с хвостом слева) */
+  padding: 8px 12px 18px;
   border-radius: 18px 18px 18px 8px;
-
   background: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-
   color: #ffffff;
   font-size: 13px;
-  line-height: 1.25;
-
+  line-height: 1.28;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
-
   opacity: 0;
   transform: translateY(16px) scale(0.96);
   animation: introMessageIn 0.45s ease forwards;
@@ -189,19 +213,17 @@
 
 .intro-chat-message-text {
   display: block;
-  padding-right: 40px;
+  padding-right: 42px;
+  word-break: break-word;
 }
 
 .intro-chat-message-meta {
   position: absolute;
-  right: 12px;   /* ← обратно вправо */
-  left: auto;
+  right: 12px;
   bottom: 7px;
-
   display: flex;
   align-items: center;
   gap: 4px;
-
   font-size: 11px;
   color: rgba(255, 255, 255, 0.72);
 }
@@ -221,33 +243,49 @@
   }
 }
 
-/* ===== CHIBI ===== */
+/* ===== FOOTER ===== */
+
+.intro-chat-footer {
+  position: relative;
+  z-index: 15;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 0 0 220px;
+  min-height: 220px;
+  max-height: 220px;
+  padding: 0 16px max(20px, env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(11, 14, 28, 0) 0%, rgba(11, 14, 28, 0.24) 18%, rgba(11, 14, 28, 0.56) 100%);
+}
 
 .intro-chibi-wrap {
-  position: absolute;
-  left: -20px;   /* ДВИГАТЬ ЧИБИ ЛЕВЕЕ/ПРАВЕЕ */
-  bottom: -35px;   /* ДВИГАТЬ ЧИБИ ВЫШЕ/НИЖЕ */
-  width: 170px;  /* РАЗМЕР ЧИБИ */
-  z-index: 50;
+  position: relative;
+  flex: 0 0 190px;
+  width: 190px;
+  min-height: 188px;
+  z-index: 20;
   pointer-events: none;
 }
 
 .intro-chibi-character {
-  position: relative;
-  width: 100%;
+  position: absolute;
+  left: -22px;
+  bottom: -52px;
+  width: 170px;
   animation: introFloat 3.2s ease-in-out infinite;
   transform-origin: center bottom;
 }
 
 @keyframes introFloat {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
   50% {
     transform: translateY(-10px);
   }
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 }
 
@@ -268,10 +306,10 @@
 
 .intro-thoughts {
   position: absolute;
-  left: 92px;      /* ДВИГАТЬ ОБЛАЧКО ЛЕВЕЕ/ПРАВЕЕ */
-  bottom: 225px;   /* ДВИГАТЬ ОБЛАЧКО ВЫШЕ/НИЖЕ */
-  width: 180px;    /* ШИРИНА ОБЛАЧКА */
-  min-height: 58px;
+  left: 72px;
+  bottom: 178px;
+  width: 190px;
+  min-height: 60px;
   padding: 12px 14px;
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.96);
@@ -300,15 +338,15 @@
 .intro-thoughts::before {
   width: 16px;
   height: 16px;
-  left: 20px;
-  bottom: -8px;
+  left: 14px;
+  bottom: -10px;
 }
 
 .intro-thoughts::after {
   width: 10px;
   height: 10px;
-  left: 10px;
-  bottom: -18px;
+  left: 4px;
+  bottom: -20px;
 }
 
 .intro-thoughts-text {
@@ -317,6 +355,32 @@
   line-height: 1.42;
   font-weight: 600;
   word-break: break-word;
+}
+
+.intro-skip {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 18;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.intro-skip:hover {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.intro-skip.is-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .intro-typing-cursor {
@@ -344,23 +408,23 @@
 
 .intro-action {
   position: absolute;
-  left: 50%;
-  bottom: 110px;            /* ПОДНЯТЬ/ОПУСТИТЬ КНОПКУ */
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 130px;        /* ШИРИНА КНОПКИ */
-  z-index: 10;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 16;
+  pointer-events: none;
 }
 
 .intro-btn {
   width: 100%;
-  padding: 12px 14px;      /* ВЫСОТА КНОПКИ */
-  font-size: 12px;         /* РАЗМЕР ТЕКСТА КНОПКИ */
+  max-width: 160px;
+  padding: 12px 14px;
+  font-size: 12px;
   opacity: 0;
   transform: translateY(16px) scale(0.96);
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  pointer-events: auto;
 }
 
 .intro-btn.show {
@@ -376,15 +440,13 @@
 
 @media (max-width: 480px) {
   .intro-chat-scene {
-    min-height: calc(100vh - 40px);
-    padding: 12px 14px 28px;
+    height: 100vh;
+    min-height: 100vh;
   }
 
   .intro-chat-header {
-    min-height: 62px;
-    padding: 9px 10px;
-    margin-bottom: 12px;
-    border-radius: 18px;
+    min-height: 70px;
+    padding: 12px 14px;
   }
 
   .intro-header-back,
@@ -412,66 +474,90 @@
   }
 
   .intro-chat-messages {
-    padding-top: 4px;
-    padding-bottom: 205px;
+    padding: 16px 14px 68px;
     gap: 10px;
   }
 
   .intro-chat-message {
-    max-width: 84%;
+    max-width: min(86%, 290px);
     padding: 11px 14px 24px;
     font-size: 16px;
     line-height: 1.42;
-    border-radius: 17px 17px 8px 17px;
   }
 
   .intro-chat-message-text {
-  display: block;
-  padding-left: 40px;
-  padding-right: 0;
-}
+    padding-right: 0;
+    padding-left: 40px;
+  }
+
+  .intro-chat-footer {
+    flex-basis: 206px;
+    min-height: 206px;
+    max-height: 206px;
+    padding: 0 14px max(18px, env(safe-area-inset-bottom));
+  }
 
   .intro-chibi-wrap {
-    left: -20px;
-    bottom: 0;
-    width: 155px;
+    flex-basis: 170px;
+    width: 170px;
+    min-height: 176px;
+  }
+
+  .intro-chibi-character {
+    left: -18px;
+    bottom: -46px;
+    width: 152px;
   }
 
   .intro-thoughts {
-    left: 80px;
-    bottom: 108px;
-    width: 165px;
+    left: 62px;
+    bottom: 164px;
+    width: 168px;
     min-height: 54px;
     padding: 11px 13px;
     border-radius: 20px;
+  }
+
+  .intro-thoughts::before {
+    left: 12px;
+    bottom: -10px;
+  }
+
+  .intro-thoughts::after {
+    left: 3px;
+    bottom: -19px;
   }
 
   .intro-thoughts-text {
     font-size: 13px;
   }
 
+  .intro-skip {
+    right: 14px;
+    bottom: 14px;
+    font-size: 10px;
+  }
+
   .intro-action {
-    bottom: 26px;
-    width: calc(100% - 28px);
-    max-width: 240px;
+    inset: 0;
   }
 
   .intro-btn {
+    max-width: 146px;
     padding: 11px 13px;
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 
 @media (max-width: 390px) {
-  .intro-chat-scene {
-    padding: 10px 12px 24px;
+  .intro-chat-header {
+    min-height: 64px;
+    padding: 10px 12px;
   }
 
-  .intro-chat-header {
-    min-height: 58px;
-    padding: 8px 9px;
-    margin-bottom: 10px;
-    border-radius: 16px;
+  .intro-chat-scene {
+    height: 100vh;
+    min-height: 100vh;
   }
 
   .intro-header-back,
@@ -495,12 +581,11 @@
   }
 
   .intro-chat-messages {
-    padding-top: 2px;
-    padding-bottom: 190px;
+    padding: 14px 12px 62px;
   }
 
   .intro-chat-message {
-    max-width: 86%;
+    max-width: min(88%, 274px);
     font-size: 15px;
     padding: 10px 13px 23px;
   }
@@ -510,18 +595,41 @@
     right: 10px;
   }
 
+  .intro-chat-footer {
+    flex-basis: 194px;
+    min-height: 194px;
+    max-height: 194px;
+    padding: 0 12px max(16px, env(safe-area-inset-bottom));
+  }
+
   .intro-chibi-wrap {
-    left: -18px;
-    bottom: -2px;
-    width: 145px;
+    flex-basis: 156px;
+    width: 156px;
+    min-height: 164px;
+  }
+
+  .intro-chibi-character {
+    left: -14px;
+    bottom: -40px;
+    width: 142px;
   }
 
   .intro-thoughts {
-    left: 72px;
-    bottom: 100px;
+    left: 54px;
+    bottom: 148px;
     width: 154px;
     min-height: 52px;
     padding: 10px 12px;
+  }
+
+  .intro-thoughts::before {
+    left: 10px;
+    bottom: -9px;
+  }
+
+  .intro-thoughts::after {
+    left: 2px;
+    bottom: -17px;
   }
 
   .intro-thoughts-text {
@@ -529,9 +637,18 @@
     line-height: 1.38;
   }
 
+  .intro-skip {
+    right: 12px;
+    bottom: 12px;
+    font-size: 10px;
+  }
+
   .intro-action {
-    width: calc(100% - 24px);
-    max-width: 228px;
-    bottom: 20px;
+    inset: 0;
+  }
+
+  .intro-btn {
+    max-width: 138px;
+    font-size: 12px;
   }
 }

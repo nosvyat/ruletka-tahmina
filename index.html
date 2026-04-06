@@ -44,35 +44,41 @@
           </div>
         </div>
 
-        <div class="intro-chat-messages" id="introChatMessages"></div>
-
-        <div class="intro-chibi-wrap" id="introChibiWrap">
-          <div class="intro-thoughts" id="introThoughts">
-            <div class="intro-thoughts-text" id="introThoughtsText"></div>
-            <span class="intro-typing-cursor" id="introTypingCursor"></span>
-          </div>
-
-          <div class="intro-chibi-character" id="introChibiCharacter">
-            <img
-              class="intro-chibi-img intro-chibi-idle is-active"
-              src="images/intro-chibi-idle.png"
-              alt="Чиби печатает сообщение"
-              id="introChibiIdle"
-            />
-
-            <img
-              class="intro-chibi-img intro-chibi-point"
-              src="images/intro-chibi-point.png"
-              alt="Чиби указывает на кнопку"
-              id="introChibiPoint"
-            />
-          </div>
+        <div class="intro-chat-body">
+          <div class="intro-chat-messages" id="introChatMessages"></div>
         </div>
 
-        <div class="intro-action" id="introAction">
-          <button class="open-btn intro-btn hidden" id="openSurprise">
-            Крутить рулетку
-          </button>
+        <div class="intro-chat-footer">
+          <div class="intro-chibi-wrap" id="introChibiWrap">
+            <div class="intro-thoughts" id="introThoughts">
+              <div class="intro-thoughts-text" id="introThoughtsText"></div>
+              <span class="intro-typing-cursor" id="introTypingCursor"></span>
+            </div>
+
+            <div class="intro-chibi-character" id="introChibiCharacter">
+              <img
+                class="intro-chibi-img intro-chibi-idle is-active"
+                src="images/intro-chibi-idle.png"
+                alt="Чиби печатает сообщение"
+                id="introChibiIdle"
+              />
+
+              <img
+                class="intro-chibi-img intro-chibi-point"
+                src="images/intro-chibi-point.png"
+                alt="Чиби указывает на кнопку"
+                id="introChibiPoint"
+              />
+            </div>
+          </div>
+
+          <button class="intro-skip" id="introSkip" type="button">Пропустить</button>
+
+          <div class="intro-action" id="introAction">
+            <button class="open-btn intro-btn hidden" id="openSurprise">
+              Крутить рулетку
+            </button>
+          </div>
         </div>
       </div>
     </section>
