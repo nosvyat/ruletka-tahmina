@@ -7,6 +7,7 @@
 
 html,
 body {
+  height: 100%;
   min-height: 100%;
 }
 
@@ -23,6 +24,7 @@ body {
   overflow-x: hidden;
   color: #443347;
   position: relative;
+  min-height: 100vh;
 }
 
 /* общий overlay для глубины и читаемости */
@@ -51,6 +53,37 @@ body::before {
   position: relative;
   z-index: 1;
   overflow: visible;
+}
+
+@media (min-width: 481px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    padding: 18px 0;
+  }
+
+  .app {
+    width: min(100%, 430px);
+    height: calc(100vh - 36px);
+    min-height: calc(100vh - 36px);
+    padding: 0;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow:
+      0 22px 60px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 0 38px rgba(178, 110, 255, 0.08);
+    background:
+      radial-gradient(circle at top center, rgba(168, 66, 122, 0.18) 0%, transparent 30%),
+      rgba(10, 10, 20, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .screen {
+    height: 100%;
+    min-height: 100%;
+  }
 }
 
 .screen {
@@ -154,12 +187,36 @@ canvas {
 }
 
 @media (max-width: 480px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    padding: 12px 0;
+  }
+
   .app {
-    padding: 16px 14px 28px;
+    width: min(calc(100% - 16px), 430px);
+    max-width: 430px;
+    height: calc(100vh - 24px);
+    height: calc(100dvh - 24px);
+    min-height: calc(100vh - 24px);
+    min-height: calc(100dvh - 24px);
+    padding: 0;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow:
+      0 18px 48px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 0 30px rgba(178, 110, 255, 0.06);
+    background:
+      radial-gradient(circle at top center, rgba(168, 66, 122, 0.18) 0%, transparent 30%),
+      rgba(10, 10, 20, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .screen {
-    min-height: calc(100vh - 44px);
+    height: 100%;
+    min-height: 100%;
   }
 
   .title {
@@ -180,12 +237,24 @@ canvas {
 }
 
 @media (max-width: 390px) {
+  body {
+    padding: 10px 0;
+  }
+
   .app {
-    padding: 14px 12px 24px;
+    width: min(calc(100% - 14px), 430px);
+    max-width: 430px;
+    height: calc(100vh - 20px);
+    height: calc(100dvh - 20px);
+    min-height: calc(100vh - 20px);
+    min-height: calc(100dvh - 20px);
+    padding: 0;
+    border-radius: 24px;
   }
 
   .screen {
-    min-height: calc(100vh - 38px);
+    height: 100%;
+    min-height: 100%;
   }
 
   .title {
