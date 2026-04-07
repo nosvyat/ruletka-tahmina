@@ -206,7 +206,7 @@
   height: 100%;
   min-height: 0;
   margin: 0 auto;
-  padding: clamp(10px, 3vw, 18px) clamp(10px, 3vw, 16px) clamp(42px, 10vw, 72px);
+  padding: clamp(10px, 3vw, 18px) clamp(10px, 3vw, 16px) clamp(96px, 22vw, 156px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -291,6 +291,7 @@
   min-height: clamp(146px, 32vw, 220px);
   max-height: clamp(146px, 32vw, 220px);
   padding: 0 clamp(8px, 3vw, 16px) max(12px, env(safe-area-inset-bottom));
+  overflow: visible;
   background: linear-gradient(180deg, rgba(11, 14, 28, 0) 0%, rgba(11, 14, 28, 0.3) 18%, rgba(11, 14, 28, 0.62) 100%);
 }
 
@@ -300,6 +301,7 @@
   width: clamp(124px, 28vw, 190px);
   min-height: clamp(124px, 28vw, 188px);
   z-index: 20;
+  overflow: visible;
   pointer-events: none;
 }
 
@@ -341,8 +343,9 @@
 
 .intro-thoughts {
   position: absolute;
-  left: clamp(42px, 12vw, 72px);
-  bottom: clamp(100px, 24vw, 178px);
+  left: clamp(42px, 11vw, 64px);
+  top: calc(-1 * clamp(150px, 24vw, 176px));
+  bottom: auto;
   width: clamp(126px, 34vw, 190px);
   min-height: clamp(40px, 9vw, 60px);
   padding: clamp(7px, 2vw, 12px) clamp(9px, 2.4vw, 14px);
@@ -353,13 +356,14 @@
     0 14px 35px rgba(0, 0, 0, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   opacity: 0;
-  transform: translateY(6px) scale(0.96);
+  z-index: 24;
+  transform: translateY(-18px) scale(0.96);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .intro-thoughts.show {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(-28px) scale(1);
 }
 
 .intro-thoughts::before,
@@ -453,9 +457,9 @@
 
 .intro-btn {
   width: 100%;
-  max-width: clamp(118px, 32vw, 160px);
-  padding: clamp(8px, 2.4vw, 12px) clamp(10px, 2.8vw, 14px);
-  font-size: clamp(10px, 2.6vw, 12px);
+  max-width: clamp(164px, 44vw, 214px);
+  padding: clamp(11px, 3vw, 15px) clamp(16px, 4vw, 22px);
+  font-size: clamp(13px, 3.2vw, 15px);
   opacity: 0;
   transform: translateY(16px) scale(0.96);
   transition: opacity 0.45s ease, transform 0.45s ease;
@@ -480,6 +484,9 @@
     min-height: 100%;
     margin-left: 0;
     margin-right: 0;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
   }
 
   .intro-chat-scene {
@@ -517,7 +524,7 @@
   }
 
   .intro-chat-messages {
-    padding: 10px 12px 44px;
+    padding: 10px 12px 94px;
     gap: 8px;
   }
 
@@ -553,8 +560,9 @@
   }
 
   .intro-thoughts {
-    left: 48px;
-    bottom: 110px;
+    left: clamp(42px, 12vw, 52px);
+    top: calc(-1 * clamp(140px, 28vw, 156px));
+    bottom: auto;
     width: 142px;
     min-height: 44px;
     padding: 8px 10px;
@@ -587,9 +595,9 @@
   }
 
   .intro-btn {
-    max-width: 132px;
-    padding: 9px 11px;
-    font-size: 11px;
+    max-width: 176px;
+    padding: 12px 16px;
+    font-size: 13px;
   }
 }
 
@@ -598,6 +606,9 @@
     width: 100%;
     min-width: 100%;
     min-height: 100%;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
   }
 
   .intro-chat-header {
@@ -631,7 +642,7 @@
   }
 
   .intro-chat-messages {
-    padding: 8px 10px 38px;
+    padding: 8px 10px 84px;
   }
 
   .intro-chat-message {
@@ -665,8 +676,9 @@
   }
 
   .intro-thoughts {
-    left: 42px;
-    bottom: 100px;
+    left: clamp(36px, 11vw, 42px);
+    top: calc(-1 * clamp(128px, 30vw, 144px));
+    bottom: auto;
     width: 126px;
     min-height: 40px;
     padding: 7px 9px;
@@ -698,8 +710,8 @@
   }
 
   .intro-btn {
-    max-width: 118px;
-    padding: 8px 10px;
-    font-size: 10px;
+    max-width: 160px;
+    padding: 11px 14px;
+    font-size: 12px;
   }
 }

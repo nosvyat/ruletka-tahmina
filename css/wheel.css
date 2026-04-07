@@ -35,7 +35,8 @@
 
 .chibi-wrap {
   position: absolute;
-  left: 265px;
+  left: auto;
+  right: -82px;
   top: 130px;
   width: 140px;
   height: 190px;
@@ -375,7 +376,8 @@ canvas {
   }
 
   .chibi-wrap {
-    left: -56px;
+    left: auto;
+    right: 2px;
     top: 138px;
     width: 126px;
     height: 176px;
@@ -406,7 +408,8 @@ canvas {
 
 @media (max-width: 390px) {
   .chibi-wrap {
-    left: -42px;
+    left: auto;
+    right: 0;
     top: 138px;
     width: 118px;
     height: 166px;
