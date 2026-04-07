@@ -344,8 +344,8 @@
 .intro-thoughts {
   position: absolute;
   left: clamp(50px, 13vw, 72px);
-  top: calc(-1 * clamp(56px, 14vw, 82px));
-  bottom: auto;
+  top: auto;
+  bottom: clamp(104px, 22vw, 128px);
   width: clamp(126px, 34vw, 190px);
   min-height: clamp(40px, 9vw, 60px);
   padding: clamp(7px, 2vw, 12px) clamp(9px, 2.4vw, 14px);
@@ -451,7 +451,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translateY(-10px);
+  transform: translateY(-18px);
   z-index: 16;
   pointer-events: none;
 }
@@ -562,8 +562,8 @@
 
   .intro-thoughts {
     left: clamp(50px, 14vw, 60px);
-    top: calc(-1 * clamp(64px, 18vw, 76px));
-    bottom: auto;
+    top: auto;
+    bottom: 112px;
     width: 142px;
     min-height: 44px;
     padding: 8px 10px;
@@ -593,7 +593,7 @@
 
   .intro-action {
     inset: 0;
-    transform: translateY(-8px);
+    transform: translateY(-16px);
   }
 
   .intro-btn {
@@ -679,8 +679,8 @@
 
   .intro-thoughts {
     left: clamp(44px, 13vw, 48px);
-    top: calc(-1 * clamp(60px, 18vw, 70px));
-    bottom: auto;
+    top: auto;
+    bottom: 104px;
     width: 126px;
     min-height: 40px;
     padding: 7px 9px;
@@ -709,7 +709,7 @@
 
   .intro-action {
     inset: 0;
-    transform: translateY(-6px);
+    transform: translateY(-14px);
   }
 
   .intro-btn {
