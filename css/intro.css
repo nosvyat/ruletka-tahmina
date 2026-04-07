@@ -343,7 +343,7 @@
 
 .intro-thoughts {
   position: absolute;
-  left: clamp(42px, 11vw, 64px);
+  left: clamp(50px, 13vw, 72px);
   top: calc(-1 * clamp(56px, 14vw, 82px));
   bottom: auto;
   width: clamp(126px, 34vw, 190px);
@@ -451,6 +451,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: translateY(-10px);
   z-index: 16;
   pointer-events: none;
 }
@@ -560,7 +561,7 @@
   }
 
   .intro-thoughts {
-    left: clamp(42px, 12vw, 52px);
+    left: clamp(50px, 14vw, 60px);
     top: calc(-1 * clamp(64px, 18vw, 76px));
     bottom: auto;
     width: 142px;
@@ -592,6 +593,7 @@
 
   .intro-action {
     inset: 0;
+    transform: translateY(-8px);
   }
 
   .intro-btn {
@@ -676,7 +678,7 @@
   }
 
   .intro-thoughts {
-    left: clamp(36px, 11vw, 42px);
+    left: clamp(44px, 13vw, 48px);
     top: calc(-1 * clamp(60px, 18vw, 70px));
     bottom: auto;
     width: 126px;
@@ -707,6 +709,7 @@
 
   .intro-action {
     inset: 0;
+    transform: translateY(-6px);
   }
 
   .intro-btn {
