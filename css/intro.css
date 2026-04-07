@@ -344,7 +344,7 @@
 .intro-thoughts {
   position: absolute;
   left: clamp(42px, 11vw, 64px);
-  top: calc(-1 * clamp(150px, 24vw, 176px));
+  top: calc(-1 * clamp(56px, 14vw, 82px));
   bottom: auto;
   width: clamp(126px, 34vw, 190px);
   min-height: clamp(40px, 9vw, 60px);
@@ -357,13 +357,13 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   opacity: 0;
   z-index: 24;
-  transform: translateY(-18px) scale(0.96);
+  transform: translateY(6px) scale(0.96);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .intro-thoughts.show {
   opacity: 1;
-  transform: translateY(-28px) scale(1);
+  transform: translateY(0) scale(1);
 }
 
 .intro-thoughts::before,
@@ -561,7 +561,7 @@
 
   .intro-thoughts {
     left: clamp(42px, 12vw, 52px);
-    top: calc(-1 * clamp(140px, 28vw, 156px));
+    top: calc(-1 * clamp(64px, 18vw, 76px));
     bottom: auto;
     width: 142px;
     min-height: 44px;
@@ -677,7 +677,7 @@
 
   .intro-thoughts {
     left: clamp(36px, 11vw, 42px);
-    top: calc(-1 * clamp(128px, 30vw, 144px));
+    top: calc(-1 * clamp(60px, 18vw, 70px));
     bottom: auto;
     width: 126px;
     min-height: 40px;
